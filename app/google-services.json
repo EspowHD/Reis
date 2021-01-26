@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "158181612039",
+    "project_id": "reis-35057",
+    "storage_bucket": "reis-35057.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158181612039:android:2462b1c87879e67c11e8a2",
+        "android_client_info": {
+          "package_name": "com.example.reis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158181612039-kv8nejiu4uuakl1u1b3rqcpgq1npdcas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf2E_pyN3UR9ylkynXS1P9GiAIDs4GglE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158181612039-kv8nejiu4uuakl1u1b3rqcpgq1npdcas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
