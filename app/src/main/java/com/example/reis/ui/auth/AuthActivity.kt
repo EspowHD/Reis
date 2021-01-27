@@ -3,8 +3,8 @@ package com.example.reis.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.reis.MainActivity
 import com.example.reis.R
+import com.example.reis.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 

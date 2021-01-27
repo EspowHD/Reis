@@ -69,4 +69,9 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             snackbar(getString(R.string.success_registration))
         })
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
