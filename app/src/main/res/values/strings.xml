@@ -18,6 +18,9 @@
     <string name="repeat_password">Repeat Password</string>
     <string name="success_registration">Successfully registered account</string>
     <string name="error_password_too_short">The password must be at least %d digits long</string>
+    <string name="error_password_no_special_characters">The password must contain a special character</string>
+    <string name="error_password_no_lower_case">The password must contain a lower case letter</string>
+    <string name="error_password_no_upper_case">The password must contain a upper case letter</string>
     <string name="error_username_too_short">The username can\'t have less than %d characters</string>
     <string name="error_username_too_long">The username can\'t have more than %d characters</string>
     <string name="error_not_a_valid_email">Please enter a valid E-Mail</string>
