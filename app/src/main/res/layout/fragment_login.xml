@@ -34,7 +34,7 @@
             android:ems="15"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,7 +54,7 @@
             android:ems="15"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
