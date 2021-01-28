@@ -5,5 +5,5 @@ import com.example.reis.other.Resource
 
 interface MainRepository {
 
-    suspend fun createPost(imageUri: Uri, text: String, tagged: List<String>): Resource<Any>
+    suspend fun createPost(imageUri: Uri, text: String, taggedUsers: List<String>): Resource<Any>
 }
