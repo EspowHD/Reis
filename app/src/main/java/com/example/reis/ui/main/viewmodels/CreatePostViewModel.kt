@@ -23,6 +23,13 @@ class CreatePostViewModel @ViewModelInject constructor(
     private val _createPostStatus = MutableLiveData<Event<Resource<Any>>>()
     val createPostStatus: LiveData<Event<Resource<Any>>> = _createPostStatus
 
+    private val _curImageUri = MutableLiveData<Uri>()
+    val curImageUri: LiveData<Uri> = _curImageUri
+
+    fun setCurImageUri(uri: Uri) {
+        _curImageUri.postValue(uri)
+    }
+
     fun createPost(imageUri: Uri, text: String, taggedUsers: List<String>) {
         _createPostStatus.postValue(Event(Resource.Loading()))
         viewModelScope.launch(dispatcher) {

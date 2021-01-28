@@ -41,7 +41,8 @@
             android:hint="@string/enter_post_text"
             android:inputType="textMultiLine"
             android:maxLength="200"
-            android:maxLines="5" />
+            android:maxLines="5"
+            android:textColor="@color/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
