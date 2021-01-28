@@ -18,6 +18,7 @@ import com.example.reis.R
 import com.example.reis.databinding.FragmentCreatePostBinding
 import com.example.reis.other.EventObserver
 import com.example.reis.ui.main.viewmodels.CreatePostViewModel
+import com.example.reis.ui.slideUpViews
 import com.example.reis.ui.snackbar
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -82,6 +83,14 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
                 viewModel.createPost(uri, binding.etPostDescription.text.toString(), listOf())
             } ?: snackbar(getString(R.string.error_no_image_chosen))
         }
+
+        slideUpViews(
+            requireContext(),
+            binding.ivPostImage,
+            binding.btnSetPostImage,
+            binding.tilPostText,
+            binding.btnPost
+        )
     }
 
     private fun subscribeToObservers() {
