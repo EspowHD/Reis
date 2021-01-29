@@ -15,5 +15,5 @@ class Post(
         val date: Long = 0L,
         @get:Exclude var isLiked: Boolean = false,
         @get:Exclude var isLiking: Boolean = false,
-        val likedBy: List<String> = listOf()
+        var likedBy: List<String> = listOf()
 )
