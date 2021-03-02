@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="base_background_color" format="color" />
+    <attr name="nav_color" format="color" />
+    <attr name="icons_color" format="color" />
+    <attr name="text_color" format="color" />
+    <attr name="hint_text_color" format="color" />
+    <attr name="clicked_icons_color" format="color" />
+    <attr name="buttons_color" format="color" />
+    <attr name="nav_margin" format="dimension" />
+</resources>

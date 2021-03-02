@@ -48,11 +48,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             )
         }
 
-        binding.tvRegisterNewAccount.setOnClickListener {
+        binding.tvGoBack.setOnClickListener {
             if (findNavController().previousBackStackEntry != null) {
                 findNavController().popBackStack()
             } else findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+                    LoginFragmentDirections.actionLoginFragmentToAuthFragment()
             )
         }
     }

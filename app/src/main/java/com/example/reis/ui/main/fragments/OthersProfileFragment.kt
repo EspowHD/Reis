@@ -69,8 +69,8 @@ class OthersProfileFragment : ProfileFragment() {
                 set1.applyTo(binding.clProfile)
             } else {
                 text = requireContext().getString(R.string.follow)
-                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.darkBackground))
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorDarkGray))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
                 set2.applyTo(binding.clProfile)
             }
         }

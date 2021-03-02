@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.reis.R
-import com.example.reis.databinding.FragmentRegisterBinding
+import com.example.reis.databinding.FragmentSignUpBinding
 import com.example.reis.other.EventObserver
 import com.example.reis.ui.auth.AuthViewModel
 import com.example.reis.ui.snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment(R.layout.fragment_register) {
+class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     //ViewBinding
-    private var _binding: FragmentRegisterBinding? = null
+    private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
     //variables
@@ -29,7 +29,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,11 +47,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             )
         }
 
-        binding.tvLogin.setOnClickListener {
+        binding.tvGoBack.setOnClickListener {
             if (findNavController().previousBackStackEntry != null) {
                 findNavController().popBackStack()
             } else findNavController().navigate(
-                    RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+                    SignUpFragmentDirections.actionSignUpFrgamentToAuthFragment()
             )
         }
     }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/colorOffWhite"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/top_bar"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="@drawable/shape_title_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAppName"
+        app:layout_constraintEnd_toStartOf="@+id/tvAppName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvAppName" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/futura_bold"
+        android:text="@string/app_name"
+        android:textAllCaps="true"
+        android:textColor="@color/colorLightGray"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/top_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/futura_bold"
+        android:text="@string/login"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvSignUp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="48dp"
+        android:fontFamily="@font/futura_bold"
+        android:text="@string/sign_up"
+        android:textColor="@color/colorLightGray"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorOffWhite">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:ems="15"
             android:hint="@string/email"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorBlack"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="15"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorBlack"
             android:hint="@string/username"
             android:inputType="text" />
 
@@ -57,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="15"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorBlack"
             android:hint="@string/password"
             android:inputType="textPassword" />
 
@@ -77,18 +78,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorBlack"
             android:ems="15"
             android:hint="@string/repeat_password" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvLogin"
+        android:id="@+id/tvGoBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/go_back"
+        android:textColor="@color/colorDarkGray"
         android:textSize="20sp"
-        android:text="@string/login_with_existing_account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tilPassword"
         app:layout_constraintStart_toStartOf="@+id/tilPassword"
@@ -109,7 +111,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register"
+        android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="@+id/tilRepeatPassword"
         app:layout_constraintTop_toBottomOf="@+id/tilRepeatPassword" />
 
