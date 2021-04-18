@@ -27,4 +27,9 @@
         android:title="@string/create_post"
         android:icon="@drawable/ic_create_post" />
 
+    <item
+        android:id="@+id/homeFragment"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home" />
+
 </menu>

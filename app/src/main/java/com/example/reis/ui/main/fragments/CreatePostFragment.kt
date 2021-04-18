@@ -109,6 +109,7 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         ) {
             binding.createPostProgressBar.isVisible = false
             findNavController().popBackStack()
+            findNavController().navigate(R.id.profileFragment)
         })
     }
 

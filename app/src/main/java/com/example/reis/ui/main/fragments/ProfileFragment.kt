@@ -42,7 +42,7 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -62,7 +62,7 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
         setupRecyclerView()
         subscribeToObservers()
 
-        binding.btnToggleFollow.isVisible = false
+        binding.ibFollow.isVisible = false
         viewModel.loadProfile(uid)
 
         gridPostAdapter.setOnPostClickListener { post ->
@@ -107,5 +107,10 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
             postProgressBar!!.isVisible = false
             gridPostAdapter.posts = posts
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -121,4 +121,9 @@ class ViewPostFragment : Fragment(R.layout.fragment_view_post) {
             binding.tvLikedBy.text = likeString
         })
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

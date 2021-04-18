@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reis.R
 import com.example.reis.adapters.UserAdapter
@@ -17,6 +18,7 @@ import com.example.reis.other.Constants.SEARCH_TIME_DELAY
 import com.example.reis.other.EventObserver
 import com.example.reis.ui.main.viewmodels.SearchViewModel
 import com.example.reis.ui.snackbar
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -61,6 +63,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
             }
         }
+
+        userAdapter.setOnUserClickListener { user ->
+            if (user.uid != FirebaseAuth.getInstance().uid!!) {
+                findNavController()
+                        .navigate(SearchFragmentDirections.globalActionToOthersProfileFragment(user.uid))
+            } else {
+                findNavController()
+                        .navigate(R.id.profileFragment)
+            }
+        }
     }
 
     private fun subscribeToObservers() {
@@ -82,5 +94,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         layoutManager = LinearLayoutManager(requireContext())
         adapter = userAdapter
         itemAnimator = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
