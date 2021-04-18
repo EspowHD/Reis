@@ -53,7 +53,7 @@ class ViewPostFragment : Fragment(R.layout.fragment_view_post) {
         subscribeToObservers()
 
         binding.ibLike.setOnClickListener {
-            viewModel.toggleLikeForPost(post!!)
+            if (!post?.isLiking!!) viewModel.toggleLikeForPost(post!!)
         }
         binding.ibDeletePost.setOnClickListener {
             DeletePostDialog().apply {
@@ -107,6 +107,7 @@ class ViewPostFragment : Fragment(R.layout.fragment_view_post) {
                     post!!.isLiking = true
                 }
         ) { isLiked ->
+            post!!.isLiking = false
             val uid = FirebaseAuth.getInstance().uid!!
             post!!.isLiked = isLiked
             if (isLiked) post!!.likedBy += uid
