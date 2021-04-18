@@ -31,6 +31,7 @@
         <item name="materialButtonStyle">@style/DefaultButtonStyle</item>
         <item name="textInputStyle">@style/TextInputLayoutStyle</item>
         <item name="android:textViewStyle">@style/DefaultTextViewStyle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/DefaultDialogTextStyle</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -54,7 +55,7 @@
         <item name="backgroundColor">?attr/base_background_color</item>
     </style>
 
-    <style name="DefaultDialogTextStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <style name="DefaultDialogTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="fontFamily">@font/futura_regular</item>
         <item name="android:textColor">?attr/text_color</item>
     </style>

@@ -11,10 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.RequestManager
 import com.example.reis.R
+import com.example.reis.adapters.UserAdapter
 import com.example.reis.data.entities.Post
 import com.example.reis.databinding.FragmentViewPostBinding
 import com.example.reis.other.EventObserver
 import com.example.reis.ui.main.dialogs.DeletePostDialog
+import com.example.reis.ui.main.dialogs.LikedByDialog
 import com.example.reis.ui.main.viewmodels.ViewPostViewModel
 import com.example.reis.ui.snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -61,6 +63,9 @@ class ViewPostFragment : Fragment(R.layout.fragment_view_post) {
                     viewModel.deletePost(post!!)
                 }
             }.show(childFragmentManager, null)
+        }
+        binding.tvLikedBy.setOnClickListener {
+            viewModel.getUsers(post!!.likedBy)
         }
         viewModel.loadPost(args.postid)
     }
@@ -121,6 +126,15 @@ class ViewPostFragment : Fragment(R.layout.fragment_view_post) {
             val likeString = "${post!!.likedBy.size} likes"
             binding.tvLikedBy.text = likeString
         })
+
+        viewModel.likedByUsers.observe(viewLifecycleOwner, EventObserver(
+                onError = { snackbar(it) }
+        ) { users ->
+            val userAdapter = UserAdapter(glide)
+            userAdapter.users = users
+            LikedByDialog(userAdapter).show(childFragmentManager, null)
+        }
+        )
     }
 
     override fun onDestroyView() {

@@ -40,6 +40,7 @@ class ViewPostViewModel @ViewModelInject constructor(
     }
 
     fun getUsers(uids: List<String>) {
+        if (uids.isEmpty()) return
         _likedByUsers.postValue(Event(Resource.Loading()))
         viewModelScope.launch(dispatcher) {
             val result = repository.getUsers(uids)
