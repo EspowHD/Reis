@@ -30,12 +30,23 @@
     <action
         android:id="@+id/globalActionToCreatePostFragment"
         app:destination="@+id/createPostFragment" />
+    <action
+        android:id="@+id/globalActionToViewPostFragment"
+        app:destination="@+id/viewPostFragment" />
     <fragment
         android:id="@+id/othersProfileFragment"
         android:name="com.example.reis.ui.main.fragments.OthersProfileFragment"
         android:label="OthersProfileFragment">
         <argument
             android:name="uid"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPostFragment"
+        android:name="com.example.reis.ui.main.fragments.ViewPostFragment"
+        android:label="ViewPostFragment">
+        <argument
+            android:name="postid"
             app:argType="string" />
     </fragment>
 </navigation>

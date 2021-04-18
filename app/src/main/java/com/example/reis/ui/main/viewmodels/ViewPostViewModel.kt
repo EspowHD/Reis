@@ -1,5 +1,6 @@
 package com.example.reis.ui.main.viewmodels
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +14,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-abstract class BasePostViewModel(
-    private val repository: MainRepository,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Main
+class ViewPostViewModel @ViewModelInject constructor(
+        private val repository: MainRepository,
+        private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
+
+    private val _postMeta = MutableLiveData<Event<Resource<Post>>>()
+    val postMeta: LiveData<Event<Resource<Post>>> = _postMeta
 
     private val _likePostStatus = MutableLiveData<Event<Resource<Boolean>>>()
     val likePostStatus: LiveData<Event<Resource<Boolean>>> = _likePostStatus
@@ -27,9 +31,13 @@ abstract class BasePostViewModel(
     private val _likedByUsers = MutableLiveData<Event<Resource<List<User>>>>()
     val likedByUsers: LiveData<Event<Resource<List<User>>>> = _likedByUsers
 
-    abstract val posts: LiveData<Event<Resource<List<Post>>>>
-
-    abstract fun getPosts(uid: String = "")
+    fun loadPost(pid: String) {
+        _postMeta.postValue(Event(Resource.Loading()))
+        viewModelScope.launch(dispatcher) {
+            val result = repository.getPost(pid)
+            _postMeta.postValue(Event(result))
+        }
+    }
 
     fun getUsers(uids: List<String>) {
         _likedByUsers.postValue(Event(Resource.Loading()))

@@ -6,19 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.RequestManager
 import com.example.reis.R
+import com.example.reis.adapters.GridPostAdapter
 import com.example.reis.databinding.FragmentProfileBinding
 import com.example.reis.other.EventObserver
-import com.example.reis.ui.main.viewmodels.BasePostViewModel
 import com.example.reis.ui.main.viewmodels.ProfileViewModel
 import com.example.reis.ui.snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-open class ProfileFragment : BasePostFragment(R.layout.fragment_profile) {
+open class ProfileFragment : Fragment(R.layout.fragment_profile) {
+
+    @Inject
+    lateinit var glide: RequestManager
+
+    @Inject
+    lateinit var gridPostAdapter: GridPostAdapter
+
+    private var postProgressBar: ProgressBar? = null
+
+    protected val viewModel: ProfileViewModel by viewModels()
+
+    protected open val uid: String
+        get() = FirebaseAuth.getInstance().uid!!
 
     private var _binding: FragmentProfileBinding? = null
 
@@ -35,34 +53,30 @@ open class ProfileFragment : BasePostFragment(R.layout.fragment_profile) {
         return binding.root
     }
 
-    override val postProgressBar: ProgressBar
-        get() = binding.profilePostsProgressBar
 
-    override val basePostViewModel: BasePostViewModel
-        get() {
-            val vm: ProfileViewModel by viewModels()
-            return vm
-        }
-
-    protected val viewModel: ProfileViewModel
-        get() = basePostViewModel as ProfileViewModel
-
-    protected open val uid: String
-        get() = FirebaseAuth.getInstance().uid!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postProgressBar = binding.profilePostsProgressBar
+
         setupRecyclerView()
         subscribeToObservers()
 
         binding.btnToggleFollow.isVisible = false
         viewModel.loadProfile(uid)
+
+        gridPostAdapter.setOnPostClickListener { post ->
+            findNavController()
+                    .navigate(
+                            ViewPostFragmentDirections.globalActionToViewPostFragment(post.id)
+                    )
+        }
     }
 
     private fun setupRecyclerView() = binding.rvPosts.apply {
-        adapter = postAdapter
+        adapter = gridPostAdapter
         itemAnimator = null
-        layoutManager = LinearLayoutManager(requireContext())
+        layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
     }
 
     private fun subscribeToObservers() {
@@ -75,10 +89,23 @@ open class ProfileFragment : BasePostFragment(R.layout.fragment_profile) {
         ) { user ->
             binding.profileMetaProgressBar.isVisible = false
             binding.tvUsername.text = user.username
-            binding.tvProfileDescription.text = if (user.description.isEmpty()) {
-                requireContext().getString(R.string.no_description)
-            } else user.description
+            if (user.description.isEmpty()) {
+                binding.tvProfileDescription.isVisible = false
+            } else binding.tvProfileDescription.text = user.description
             glide.load(user.profilePictureUrl).into(binding.ivProfileImage)
+        })
+
+        viewModel.posts.observe(viewLifecycleOwner, EventObserver(
+                onError = {
+                    postProgressBar!!.isVisible = false
+                    snackbar(it)
+                },
+                onLoading = {
+                    postProgressBar!!.isVisible = true
+                }
+        ) { posts ->
+            postProgressBar!!.isVisible = false
+            gridPostAdapter.posts = posts
         })
     }
 }

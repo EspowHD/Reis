@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.reis.data.entities.Post
+import com.example.reis.data.entities.User
 import com.example.reis.other.Event
 import com.example.reis.other.Resource
 import com.example.reis.repositories.MainRepository
@@ -13,23 +13,21 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel @ViewModelInject constructor(
+class SearchViewModel @ViewModelInject constructor(
         private val repository: MainRepository,
         private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
-    private val _posts = MutableLiveData<Event<Resource<List<Post>>>>()
-    val posts: LiveData<Event<Resource<List<Post>>>> = _posts
+    private val _searchResults = MutableLiveData<Event<Resource<List<User>>>>()
+    val searchResults: LiveData<Event<Resource<List<User>>>> = _searchResults
 
-    init {
-        getPosts()
-    }
+    fun searchUser(query: String) {
+        if (query.isEmpty()) return
 
-    private fun getPosts() {
-        _posts.postValue(Event(Resource.Loading()))
+        _searchResults.postValue(Event(Resource.Loading()))
         viewModelScope.launch(dispatcher) {
-            val result = repository.getPostsForFollows()
-            _posts.postValue(Event(result))
+            val result = repository.searchUser(query)
+            _searchResults.postValue(Event(result))
         }
     }
 }

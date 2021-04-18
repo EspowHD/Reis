@@ -123,20 +123,41 @@ class DefaultMainRepository : MainRepository {
     override suspend fun getUsers(uids: List<String>) = withContext(Dispatchers.IO) {
         safeCall {
             val usersList = users.whereIn("uid", uids).orderBy("username").get().await()
-                .toObjects(User::class.java)
+                    .toObjects(User::class.java)
             Resource.Success(usersList)
+        }
+    }
+
+    override suspend fun getPost(pid: String) = withContext(Dispatchers.IO) {
+        safeCall {
+            val post = posts.document(pid).get().await().toObject(Post::class.java)
+                    ?: throw IllegalStateException()
+            val uid = FirebaseAuth.getInstance().uid!!
+            val author = getUser(post.authorUid).data!!
+            post.authorProfilePictureUrl = author.profilePictureUrl
+            post.authorUsername = author.username
+            post.isLiked = uid in post.likedBy
+            Resource.Success(post)
         }
     }
 
     override suspend fun getUser(uid: String) = withContext(Dispatchers.IO) {
         safeCall {
             val user = users.document(uid).get().await().toObject(User::class.java)
-                ?: throw IllegalStateException()
+                    ?: throw IllegalStateException()
             val currentUid = FirebaseAuth.getInstance().uid!!
             val currentUser = users.document(currentUid).get().await().toObject(User::class.java)
-                ?: throw IllegalStateException()
+                    ?: throw IllegalStateException()
             user.isFollowing = uid in currentUser.follows
             Resource.Success(user)
+        }
+    }
+
+    override suspend fun searchUser(query: String) = withContext(Dispatchers.IO) {
+        safeCall {
+            val userResults = users.whereGreaterThanOrEqualTo("username", query.toUpperCase(Locale.ROOT))
+                    .get().await().toObjects(User::class.java)
+            Resource.Success(userResults)
         }
     }
 }

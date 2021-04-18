@@ -3,6 +3,7 @@ package com.example.reis.ui.main.viewmodels
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.reis.data.entities.Post
 import com.example.reis.data.entities.User
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @ViewModelInject constructor(
         private val repository: MainRepository,
         private val dispatcher: CoroutineDispatcher = Dispatchers.Main
-) : BasePostViewModel(repository, dispatcher) {
+) : ViewModel() {
 
     private val _profileMeta = MutableLiveData<Event<Resource<User>>>()
     val profileMeta: LiveData<Event<Resource<User>>> = _profileMeta
@@ -25,10 +26,9 @@ class ProfileViewModel @ViewModelInject constructor(
     val followStatus: LiveData<Event<Resource<Boolean>>> = _followStatus
 
     private val _posts = MutableLiveData<Event<Resource<List<Post>>>>()
-    override val posts: LiveData<Event<Resource<List<Post>>>>
-        get() = _posts
+    val posts: LiveData<Event<Resource<List<Post>>>> = _posts
 
-    override fun getPosts(uid: String) {
+    private fun getPosts(uid: String) {
         _posts.postValue(Event(Resource.Loading()))
         viewModelScope.launch(dispatcher) {
             val result = repository.getPostsForProfile(uid)

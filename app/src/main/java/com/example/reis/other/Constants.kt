@@ -8,6 +8,9 @@ object Constants {
     const val MIN_USERNAME_LENGTH = 4
     const val MAX_USERNAME_LENGTH = 16
     const val MIN_PASSWORD_LENGTH = 8
+
+    const val SEARCH_TIME_DELAY = 500L
+
     val SPECIAL_CHARACTERS_REGEX = Regex("(?=.*?[#?!@\$%^&*-.,])")
     val UPPER_CASE_LETTER_REGEX = Regex("(?=.*?[A-Z])")
     val LOWER_CASE_LETTER_REGEX = Regex("(?=.*?[a-z])")
