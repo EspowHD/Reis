@@ -63,7 +63,12 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
         subscribeToObservers()
 
         binding.ibFollow.isVisible = false
+        binding.ibEditProfile.isVisible = true
         viewModel.loadProfile(uid)
+
+        binding.ibEditProfile.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.globalActionToEditProfileFragment())
+        }
 
         gridPostAdapter.setOnPostClickListener { post ->
             findNavController()

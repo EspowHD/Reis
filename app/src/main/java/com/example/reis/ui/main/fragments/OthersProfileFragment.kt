@@ -29,6 +29,7 @@ class OthersProfileFragment : ProfileFragment() {
     private fun subscribeToObservers() {
         viewModel.profileMeta.observe(viewLifecycleOwner, EventObserver {
             binding.ibFollow.isVisible = true
+            binding.ibEditProfile.isVisible = false
             setupToggleFollowButton(it)
             curUser = it
         })

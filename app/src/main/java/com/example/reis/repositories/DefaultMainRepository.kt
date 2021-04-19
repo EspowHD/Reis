@@ -212,7 +212,7 @@ class DefaultMainRepository : MainRepository {
         if (user.profilePictureUrl != DEFAULT_PROFILE_PICTURE_URL) {
             storage.getReferenceFromUrl(user.profilePictureUrl).delete().await()
         }
-        storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl.await()
+        storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl?.await()
     }
 
     override suspend fun updateProfile(profileUpdate: ProfileUpdate) = withContext(Dispatchers.IO) {
