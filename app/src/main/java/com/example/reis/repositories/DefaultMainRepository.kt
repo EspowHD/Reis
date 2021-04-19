@@ -3,7 +3,9 @@ package com.example.reis.repositories
 import android.net.Uri
 import com.example.reis.data.entities.Comment
 import com.example.reis.data.entities.Post
+import com.example.reis.data.entities.ProfileUpdate
 import com.example.reis.data.entities.User
+import com.example.reis.other.Constants.DEFAULT_PROFILE_PICTURE_URL
 import com.example.reis.other.Resource
 import com.example.reis.other.safeCall
 import com.google.firebase.auth.FirebaseAuth
@@ -201,6 +203,32 @@ class DefaultMainRepository : MainRepository {
                         comment.profilePictureUrl = user.profilePictureUrl
                     }
             Resource.Success(commentsForPost)
+        }
+    }
+
+    override suspend fun updateProfilePicture(uid: String, imageUri: Uri) = withContext(Dispatchers.IO) {
+        val storageRef = storage.getReference(uid)
+        val user = getUser(uid).data!!
+        if (user.profilePictureUrl != DEFAULT_PROFILE_PICTURE_URL) {
+            storage.getReferenceFromUrl(user.profilePictureUrl).delete().await()
+        }
+        storageRef.putFile(imageUri).await().metadata?.reference?.downloadUrl.await()
+    }
+
+    override suspend fun updateProfile(profileUpdate: ProfileUpdate) = withContext(Dispatchers.IO) {
+        safeCall {
+            val imageUrl = profileUpdate.profilePictureUri?.let { uri ->
+                updateProfilePicture(profileUpdate.uidToUpdate, uri).toString()
+            }
+            val map = mutableMapOf(
+                    "username" to profileUpdate.username,
+                    "description" to profileUpdate.description
+            )
+            imageUrl?.let { url ->
+                map["profilePictureUrl"] = url
+            }
+            users.document(profileUpdate.uidToUpdate).update(map.toMap()).await()
+            Resource.Success(Any())
         }
     }
 }
