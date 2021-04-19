@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.RequestManager
@@ -20,6 +21,9 @@ import com.example.reis.ui.main.viewmodels.ProfileViewModel
 import com.example.reis.ui.snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,7 +35,6 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
     @Inject
     lateinit var gridPostAdapter: GridPostAdapter
 
-    private var postProgressBar: ProgressBar? = null
 
     protected val viewModel: ProfileViewModel by viewModels()
 
@@ -57,8 +60,6 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postProgressBar = binding.profilePostsProgressBar
-
         setupRecyclerView()
         subscribeToObservers()
 
@@ -72,9 +73,22 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         gridPostAdapter.setOnPostClickListener { post ->
             findNavController()
-                    .navigate(
-                            ViewPostFragmentDirections.globalActionToViewPostFragment(post.id)
-                    )
+                .navigate(
+                    ViewPostFragmentDirections.globalActionToViewPostFragment(post.id)
+                )
+        }
+
+        lifecycleScope.launch {
+            viewModel.getPagingFlow(uid).collect {
+                gridPostAdapter.submitData(it)
+            }
+        }
+
+        lifecycleScope.launch {
+            gridPostAdapter.loadStateFlow.collectLatest {
+                binding.profilePostsProgressBar?.isVisible = it.refresh is LoadState.Loading ||
+                        it.append is LoadState.Loading
+            }
         }
     }
 
@@ -98,19 +112,6 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 binding.tvProfileDescription.isVisible = false
             } else binding.tvProfileDescription.text = user.description
             glide.load(user.profilePictureUrl).into(binding.ivProfileImage)
-        })
-
-        viewModel.posts.observe(viewLifecycleOwner, EventObserver(
-                onError = {
-                    postProgressBar!!.isVisible = false
-                    snackbar(it)
-                },
-                onLoading = {
-                    postProgressBar!!.isVisible = true
-                }
-        ) { posts ->
-            postProgressBar!!.isVisible = false
-            gridPostAdapter.posts = posts
         })
     }
 

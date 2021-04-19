@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -14,15 +14,15 @@ import com.example.reis.databinding.ItemGridPostBinding
 import javax.inject.Inject
 
 class GridPostAdapter @Inject constructor(
-        private val glide: RequestManager
-) : RecyclerView.Adapter<GridPostAdapter.PostViewHolder>() {
+    private val glide: RequestManager
+) : PagingDataAdapter<Post, GridPostAdapter.PostViewHolder>(Companion) {
 
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemGridPostBinding.bind(itemView)
         val ivPostImage: ImageView = binding.ivPostImage
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Post>() {
+    companion object : DiffUtil.ItemCallback<Post>() {
         override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
             return oldItem.id == newItem.id
         }
@@ -31,12 +31,6 @@ class GridPostAdapter @Inject constructor(
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
-
-    private val differ = AsyncListDiffer(this, diffCallback)
-
-    var posts: List<Post>
-        get() = differ.currentList
-        set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         return PostViewHolder(
@@ -48,12 +42,8 @@ class GridPostAdapter @Inject constructor(
         )
     }
 
-    override fun getItemCount(): Int {
-        return posts.size
-    }
-
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = posts[position]
+        val post = getItem(position) ?: return
         holder.apply {
             glide.load(post.imageUrl).into(ivPostImage)
 

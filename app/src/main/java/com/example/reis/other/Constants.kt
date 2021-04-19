@@ -14,4 +14,6 @@ object Constants {
     val SPECIAL_CHARACTERS_REGEX = Regex("(?=.*?[#?!@\$%^&*-.,])")
     val UPPER_CASE_LETTER_REGEX = Regex("(?=.*?[A-Z])")
     val LOWER_CASE_LETTER_REGEX = Regex("(?=.*?[a-z])")
+
+    const val PAGE_SIZE = 5
 }

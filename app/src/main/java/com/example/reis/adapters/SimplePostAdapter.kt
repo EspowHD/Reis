@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -15,8 +15,8 @@ import com.example.reis.databinding.ItemSimplePostBinding
 import javax.inject.Inject
 
 class SimplePostAdapter @Inject constructor(
-        private val glide: RequestManager
-) : RecyclerView.Adapter<SimplePostAdapter.PostViewHolder>() {
+    private val glide: RequestManager
+) : PagingDataAdapter<Post, SimplePostAdapter.PostViewHolder>(Companion) {
 
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemSimplePostBinding.bind(itemView)
@@ -25,7 +25,7 @@ class SimplePostAdapter @Inject constructor(
         val tvPostTitle: TextView = binding.tvPostTitle
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Post>() {
+    companion object : DiffUtil.ItemCallback<Post>() {
         override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
@@ -34,12 +34,6 @@ class SimplePostAdapter @Inject constructor(
             return oldItem.id == newItem.id
         }
     }
-
-    private val differ = AsyncListDiffer(this, diffCallback)
-
-    var posts: List<Post>
-        get() = differ.currentList
-        set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         return PostViewHolder(
@@ -51,12 +45,8 @@ class SimplePostAdapter @Inject constructor(
         )
     }
 
-    override fun getItemCount(): Int {
-        return posts.size
-    }
-
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = posts[position]
+        val post = getItem(position) ?: return
         holder.apply {
             glide.load(post.imageUrl).into(ivPostImage)
             glide.load(post.authorProfilePictureUrl).into(ivAuthorProfileImage)
