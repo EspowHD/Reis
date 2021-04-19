@@ -33,6 +33,9 @@
     <action
         android:id="@+id/globalActionToViewPostFragment"
         app:destination="@+id/viewPostFragment" />
+    <action
+        android:id="@+id/globalActionToCommentDialog"
+        app:destination="@+id/commentDialog" />
     <fragment
         android:id="@+id/othersProfileFragment"
         android:name="com.example.reis.ui.main.fragments.OthersProfileFragment"
@@ -49,4 +52,12 @@
             android:name="postid"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/commentDialog"
+        android:name="com.example.reis.ui.main.dialogs.CommentDialog"
+        android:label="CommentDialog">
+        <argument
+            android:name="postId"
+            app:argType="string" />
+    </dialog>
 </navigation>

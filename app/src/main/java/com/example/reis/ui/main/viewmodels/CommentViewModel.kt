@@ -28,6 +28,7 @@ class CommentViewModel @ViewModelInject constructor(
     val commentsForPost: LiveData<Event<Resource<List<Comment>>>> = _commentsForPost
 
     fun createComment(commentText: String, postId: String) {
+        if (commentText.isEmpty()) return
         _createCommentStatus.postValue(Event(Resource.Loading()))
         viewModelScope.launch(dispatcher) {
             val result = repository.createComment(commentText, postId)
@@ -43,7 +44,7 @@ class CommentViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getCommentsForPost(commentText: String, postId: String) {
+    fun getCommentsForPost(postId: String) {
         _commentsForPost.postValue(Event(Resource.Loading()))
         viewModelScope.launch(dispatcher) {
             val result = repository.getCommentsForPost(postId)

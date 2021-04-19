@@ -67,6 +67,11 @@ class ViewPostFragment : Fragment(R.layout.fragment_view_post) {
         binding.tvLikedBy.setOnClickListener {
             viewModel.getUsers(post!!.likedBy)
         }
+        binding.ibComments.setOnClickListener {
+            findNavController()
+                    .navigate(ViewPostFragmentDirections.globalActionToCommentDialog(post!!.id)
+                    )
+        }
         viewModel.loadPost(args.postid)
     }
 
