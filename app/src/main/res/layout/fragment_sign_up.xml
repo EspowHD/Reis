@@ -12,14 +12,14 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/tilUsername"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="15"
-            android:hint="@string/email"
             android:textColor="@color/colorBlack"
             android:inputType="textEmailAddress" />
 
@@ -32,7 +32,8 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/username">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etUsername"
@@ -40,7 +41,6 @@
             android:layout_height="wrap_content"
             android:ems="15"
             android:textColor="@color/colorBlack"
-            android:hint="@string/username"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,7 +51,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        android:hint="@string/password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
@@ -59,7 +60,6 @@
             android:layout_height="wrap_content"
             android:ems="15"
             android:textColor="@color/colorBlack"
-            android:hint="@string/password"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -71,7 +71,8 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilPassword">
+        app:layout_constraintTop_toBottomOf="@+id/tilPassword"
+        android:hint="@string/repeat_password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etRepeatPassword"
@@ -79,8 +80,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:textColor="@color/colorBlack"
-            android:ems="15"
-            android:hint="@string/repeat_password" />
+            android:ems="15" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

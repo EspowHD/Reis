@@ -32,13 +32,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostImage">
+        app:layout_constraintTop_toBottomOf="@+id/ivPostImage"
+        android:hint="@string/enter_post_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPostDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_post_text"
             android:inputType="textMultiLine"
             android:maxLength="200"
             android:maxLines="5" />
