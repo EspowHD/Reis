@@ -18,6 +18,7 @@
     <string name="login">Login</string>
     <string name="go_back">Go back</string>
     <string name="sign_up">Sign up</string>
+    <string name="no_post_helper">You are either not currently following any users or the users you are following have made no posts, to search for more users tap the search icon in the toolbar at the top left.</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="success_registration">Successfully registered account</string>
     <string name="error_password_too_short">The password must be at least %d digits long</string>

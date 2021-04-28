@@ -70,6 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         lifecycleScope.launch {
             viewModel.pagingFlow.collect {
                 simplePostAdapter.submitData(it)
+                binding.tvNoPostHelper.isVisible = simplePostAdapter.itemCount == 0
             }
         }
 
@@ -77,6 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             simplePostAdapter.loadStateFlow.collectLatest {
                 binding.allPostsProgressBar?.isVisible = it.refresh is LoadState.Loading ||
                         it.append is LoadState.Loading
+                binding.tvNoPostHelper.isVisible = !binding.allPostsProgressBar?.isVisible
             }
         }
     }
