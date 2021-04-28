@@ -1,5 +1,6 @@
 package com.example.reis.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.reis.R
 import com.example.reis.databinding.FragmentSignUpBinding
 import com.example.reis.other.EventObserver
 import com.example.reis.ui.auth.AuthViewModel
+import com.example.reis.ui.main.MainActivity
 import com.example.reis.ui.snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,6 +68,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         ) {
             binding.registerProgressBar.isVisible = false
             snackbar(getString(R.string.success_registration))
+            Intent(requireContext(), MainActivity::class.java).also {
+                startActivity(it)
+                requireActivity().finish()
+            }
         })
     }
 
