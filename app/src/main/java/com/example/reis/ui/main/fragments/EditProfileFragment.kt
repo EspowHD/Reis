@@ -37,6 +37,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private var curImageUri: Uri? = null
 
+    private var curUsername: String? = null
+
     private var _binding: FragmentEditProfileBinding? = null
 
     // This property is only valid between onCreateView and
@@ -95,10 +97,15 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         }
 
         binding.btnUpdateProfile.setOnClickListener {
-            val username = binding.etUsername.text.toString()
-            val description = binding.etDescription.text.toString()
-            val profileUpdate = ProfileUpdate(uid, username, description, curImageUri)
-            viewModel.updateProfile(profileUpdate)
+            if (binding.etUsername.text.toString() != curUsername) {
+                viewModel.isValidUsername(binding.etUsername.text.toString())
+            } else {
+                val uid = FirebaseAuth.getInstance().uid!!
+                val username = binding.etUsername.text.toString()
+                val description = binding.etDescription.text.toString()
+                val profileUpdate = ProfileUpdate(uid, username, description, curImageUri)
+                viewModel.updateProfile(profileUpdate)
+            }
         }
 
         slideUpViews(
@@ -121,6 +128,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             binding.editProfileProgressBar.isVisible = false
             glide.load(user.profilePictureUrl).into(binding.ivProfileImage)
             binding.etUsername.setText(user.username)
+            curUsername = user.username
             binding.etDescription.setText(user.description)
             binding.btnUpdateProfile.isEnabled = false
         })
@@ -128,6 +136,19 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             curImageUri = uri
             glide.load(uri).into(binding.ivProfileImage)
         }
+        viewModel.validUsernameStatus.observe(viewLifecycleOwner, EventObserver(
+                onError = {
+                    snackbar(it)
+                }
+        ) { isValid ->
+            if (isValid) {
+                val uid = FirebaseAuth.getInstance().uid!!
+                val username = binding.etUsername.text.toString()
+                val description = binding.etDescription.text.toString()
+                val profileUpdate = ProfileUpdate(uid, username, description, curImageUri)
+                viewModel.updateProfile(profileUpdate)
+            } else snackbar(getString(R.string.error_username_in_use))
+        })
         viewModel.updateProfileStatus.observe(viewLifecycleOwner, EventObserver(
                 onError = {
                     binding.editProfileProgressBar.isVisible = false

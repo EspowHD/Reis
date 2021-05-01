@@ -29,11 +29,14 @@ class EditProfileViewModel @ViewModelInject constructor(
     private val _getUserStatus = MutableLiveData<Event<Resource<User>>>()
     val getUserStatus: LiveData<Event<Resource<User>>> = _getUserStatus
 
+    private val _validUsernameStatus = MutableLiveData<Event<Resource<Boolean>>>()
+    val validUsernameStatus: LiveData<Event<Resource<Boolean>>> = _validUsernameStatus
+
     private val _curImageUri = MutableLiveData<Uri>()
     val curImageUri: LiveData<Uri> = _curImageUri
 
     fun updateProfile(profileUpdate: ProfileUpdate) {
-        if (profileUpdate.username.isEmpty() || profileUpdate.description.isEmpty()) {
+        if (profileUpdate.username.isEmpty()) {
             val error = applicationContext.getString(R.string.error_input_empty)
             _updateProfileStatus.postValue(Event(Resource.Error(error)))
         } else if (profileUpdate.username.length < MIN_USERNAME_LENGTH) {
@@ -45,6 +48,14 @@ class EditProfileViewModel @ViewModelInject constructor(
                 val result = repository.updateProfile(profileUpdate)
                 _updateProfileStatus.postValue(Event(result))
             }
+        }
+    }
+
+    fun isValidUsername(username: String) {
+        _validUsernameStatus.postValue(Event(Resource.Loading()))
+        viewModelScope.launch(dispatcher) {
+            val result = repository.checkValidUsername(username)
+            _validUsernameStatus.postValue(Event(result))
         }
     }
 
