@@ -40,10 +40,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -76,9 +76,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         lifecycleScope.launch {
             simplePostAdapter.loadStateFlow.collectLatest {
-                binding.allPostsProgressBar?.isVisible = it.refresh is LoadState.Loading ||
+                binding.allPostsProgressBar.isVisible = it.refresh is LoadState.Loading ||
                         it.append is LoadState.Loading
-                binding.tvNoPostHelper.isVisible = !binding.allPostsProgressBar?.isVisible
+                binding.tvNoPostHelper.isVisible = !binding.allPostsProgressBar.isVisible
             }
         }
     }

@@ -127,7 +127,7 @@ class DefaultMainRepository : MainRepository {
         safeCall {
             val chunks = uids.chunked(10)
             val resultList = mutableListOf<User>()
-            chunks.forEach { chunk ->
+            chunks.forEach { _ ->
                 val usersList = users.whereIn("uid", uids).orderBy("username").get().await()
                     .toObjects(User::class.java)
                 resultList.addAll(usersList)

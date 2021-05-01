@@ -86,7 +86,7 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         lifecycleScope.launch {
             gridPostAdapter.loadStateFlow.collectLatest {
-                binding.profilePostsProgressBar?.isVisible = it.refresh is LoadState.Loading ||
+                binding.profilePostsProgressBar.isVisible = it.refresh is LoadState.Loading ||
                         it.append is LoadState.Loading
             }
         }
