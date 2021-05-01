@@ -41,12 +41,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         subscribeToObservers()
 
         binding.btnRegister.setOnClickListener {
-            viewModel.register(
-                    binding.etEmail.text.toString(),
-                    binding.etUsername.text.toString(),
-                    binding.etPassword.text.toString(),
-                    binding.etRepeatPassword.text.toString()
-            )
+            viewModel.isValidUsername(binding.etUsername.text.toString())
         }
 
         binding.tvGoBack.setOnClickListener {
@@ -59,6 +54,20 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     }
 
     private fun subscribeToObservers() {
+        viewModel.validUsernameStatus.observe(viewLifecycleOwner, EventObserver(
+                onError = {
+                    snackbar(it)
+                }
+        ) { isValid ->
+            if (isValid) {
+                viewModel.register(
+                        binding.etEmail.text.toString(),
+                        binding.etUsername.text.toString(),
+                        binding.etPassword.text.toString(),
+                        binding.etRepeatPassword.text.toString()
+                )
+            } else snackbar(getString(R.string.error_username_in_use))
+        })
         viewModel.registerStatus.observe(viewLifecycleOwner, EventObserver(
                 onError = {
                     binding.registerProgressBar.isVisible = false

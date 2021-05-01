@@ -27,6 +27,7 @@
     <string name="error_password_no_upper_case">The password must contain a upper case letter</string>
     <string name="error_username_too_short">The username can\'t have less than %d characters</string>
     <string name="error_username_too_long">The username can\'t have more than %d characters</string>
+    <string name="error_username_in_use">The username is already used by another user</string>
     <string name="error_not_a_valid_email">Please enter a valid E-Mail</string>
     <string name="error_input_empty">The fields must not be empty</string>
     <string name="error_incorrectly_repeated_password">The passwords do not match</string>

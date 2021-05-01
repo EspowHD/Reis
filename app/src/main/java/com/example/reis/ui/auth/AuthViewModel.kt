@@ -31,6 +31,9 @@ class AuthViewModel @ViewModelInject constructor(
     private val _registerStatus = MutableLiveData<Event<Resource<AuthResult>>>()
     val registerStatus: LiveData<Event<Resource<AuthResult>>> = _registerStatus
 
+    private val _validUsernameStatus = MutableLiveData<Event<Resource<Boolean>>>()
+    val validUsernameStatus: LiveData<Event<Resource<Boolean>>> = _validUsernameStatus
+
     private val _loginStatus = MutableLiveData<Event<Resource<AuthResult>>>()
     val loginStatus: LiveData<Event<Resource<AuthResult>>> = _loginStatus
 
@@ -77,6 +80,14 @@ class AuthViewModel @ViewModelInject constructor(
             val result = repository.register(email, username, password)
             repository.login(email, password)
             _registerStatus.postValue(Event(result))
+        }
+    }
+
+    fun isValidUsername(username: String) {
+        _validUsernameStatus.postValue(Event(Resource.Loading()))
+        viewModelScope.launch(dispatcher) {
+            val result = repository.checkValidUsername(username)
+            _validUsernameStatus.postValue(Event(result))
         }
     }
 }

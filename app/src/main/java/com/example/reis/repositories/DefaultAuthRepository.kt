@@ -39,4 +39,15 @@ class DefaultAuthRepository : AuthRepository {
             }
         }
     }
+
+    override suspend fun checkValidUsername(username: String): Resource<Boolean> {
+        return withContext(Dispatchers.IO) {
+            safeCall {
+                val isValid = users.whereEqualTo("username", username)
+                        .orderBy("uid").get().await()
+                        .toObjects(User::class.java).isEmpty()
+                Resource.Success(isValid)
+            }
+        }
+    }
 }
