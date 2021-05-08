@@ -5,14 +5,13 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class Comment(
-        val commentId: String,
-        val postId: String,
-        val uid: String,
+        val commentId: String = "",
+        val postId: String = "",
+        val uid: String = "",
         @get:Exclude
-        var username: String,
+        var username: String = "",
         @get:Exclude
-        var profilePictureUrl: String,
-        val comment: String,
+        var profilePictureUrl: String = "",
+        val comment: String = "",
         val date: Long = System.currentTimeMillis()
-) {
-}
+)

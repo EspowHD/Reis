@@ -2,6 +2,7 @@ package com.example.reis.ui.main.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,6 +96,7 @@ class CommentDialog : DialogFragment(R.layout.fragment_comment) {
         viewModel.commentsForPost.observe(viewLifecycleOwner, EventObserver(
                 onError = {
                     commentProgressBar.isVisible = false
+                    Log.d("COMMENT", it)
                     snackbar(it)
                 },
                 onLoading = { commentProgressBar.isVisible = true }
