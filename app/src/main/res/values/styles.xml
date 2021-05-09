@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="LightAppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="LightAppTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/colorOffWhite</item>
         <item name="base_background_color">@color/colorWhite</item>
         <item name="nav_color">@color/colorOffWhite</item>
