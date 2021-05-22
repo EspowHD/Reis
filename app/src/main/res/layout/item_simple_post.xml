@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/example_post_title"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivAuthorProfileImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivAuthorProfileImage" />

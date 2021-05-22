@@ -14,6 +14,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.RequestManager
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
 import com.example.reis.R
 import com.example.reis.data.entities.ProfileUpdate
 import com.example.reis.databinding.FragmentEditProfileBinding
@@ -22,8 +24,6 @@ import com.example.reis.ui.main.viewmodels.EditProfileViewModel
 import com.example.reis.ui.slideUpViews
 import com.example.reis.ui.snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -56,7 +56,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-            return CropImage.getActivityResult(intent)?.uri
+            return CropImage.getActivityResult(intent)?.uriContent
         }
     }
 

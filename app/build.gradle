@@ -103,5 +103,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Android Image Cropper
-    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+    api 'com.github.CanHub:Android-Image-Cropper:3.1.1'
 }

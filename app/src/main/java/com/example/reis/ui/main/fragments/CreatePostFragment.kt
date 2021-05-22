@@ -14,14 +14,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
 import com.example.reis.R
 import com.example.reis.databinding.FragmentCreatePostBinding
 import com.example.reis.other.EventObserver
 import com.example.reis.ui.main.viewmodels.CreatePostViewModel
 import com.example.reis.ui.slideUpViews
 import com.example.reis.ui.snackbar
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -48,7 +48,7 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-            return CropImage.getActivityResult(intent)?.uri
+            return CropImage.getActivityResult(intent)?.uriContent
         }
     }
 
