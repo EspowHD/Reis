@@ -3,10 +3,12 @@ package com.example.reis.ui.main.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.reis.R
 import com.example.reis.data.entities.User
 import com.example.reis.other.EventObserver
+import com.example.reis.ui.main.viewmodels.OthersProfileViewModel
 
 class OthersProfileFragment : ProfileFragment() {
 
@@ -14,6 +16,8 @@ class OthersProfileFragment : ProfileFragment() {
 
     override val uid: String
         get() = args.uid
+
+    override val viewModel: OthersProfileViewModel by viewModels()
 
     private var curUser: User? = null
 

@@ -35,8 +35,7 @@ open class ProfileFragment : Fragment(R.layout.fragment_profile) {
     @Inject
     lateinit var gridPostAdapter: GridPostAdapter
 
-
-    protected val viewModel: ProfileViewModel by viewModels()
+    protected open val viewModel: ProfileViewModel by viewModels()
 
     protected open val uid: String
         get() = FirebaseAuth.getInstance().uid!!

@@ -22,16 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ProfileViewModel @ViewModelInject constructor(
-        private val repository: MainRepository,
-        private val dispatcher: CoroutineDispatcher = Dispatchers.Main
+open class ProfileViewModel @ViewModelInject constructor(
+    private val repository: MainRepository,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     private val _profileMeta = MutableLiveData<Event<Resource<User>>>()
     val profileMeta: LiveData<Event<Resource<User>>> = _profileMeta
-
-    private val _followStatus = MutableLiveData<Event<Resource<Boolean>>>()
-    val followStatus: LiveData<Event<Resource<Boolean>>> = _followStatus
 
     fun getPagingFlow(uid: String): Flow<PagingData<Post>> {
         val pagingSource = ProfilePostsPagingSource(
@@ -41,14 +38,6 @@ class ProfileViewModel @ViewModelInject constructor(
         return Pager(PagingConfig(PAGE_SIZE)) {
             pagingSource
         }.flow.cachedIn(viewModelScope)
-    }
-
-    fun toggleFollowForUser(uid: String) {
-        _followStatus.postValue(Event(Resource.Loading()))
-        viewModelScope.launch(dispatcher) {
-            val result = repository.toggleFollowForUser(uid)
-            _followStatus.postValue(Event(result))
-        }
     }
 
     fun loadProfile(uid: String) {
