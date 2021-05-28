@@ -9,11 +9,15 @@ import com.example.reis.other.Resource
 
 interface MainRepository {
 
-    suspend fun createPost(imageUri: Uri, text: String, taggedUsers: List<String>): Resource<Any>
-
     suspend fun getUsers(uids: List<String>): Resource<List<User>>
 
     suspend fun getUser(uid: String): Resource<User>
+
+    suspend fun searchUser(query: String): Resource<List<User>>
+
+    suspend fun toggleFollowForUser(uid: String): Resource<Boolean>
+
+    suspend fun createPost(imageUri: Uri, text: String, taggedUsers: List<String>): Resource<Any>
 
     suspend fun getPostsForFollows(): Resource<List<Post>>
 
@@ -22,10 +26,6 @@ interface MainRepository {
     suspend fun toggleLikeForPost(post: Post): Resource<Boolean>
 
     suspend fun deletePost(post: Post): Resource<Post>
-
-    suspend fun toggleFollowForUser(uid: String): Resource<Boolean>
-
-    suspend fun searchUser(query: String): Resource<List<User>>
 
     suspend fun createComment(commentText: String, postId: String): Resource<Comment>
 
