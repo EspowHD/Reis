@@ -39,7 +39,10 @@ class CommentAdapter @Inject constructor(
         }
     }
 
-    private val differ = AsyncListDiffer(this, diffCallback)
+    private val differ = AsyncListDiffer(
+        this,
+        diffCallback
+    )//Used to determine when the comment list changes in the Recycler view and make said changes
 
     var comments: List<Comment>
         get() = differ.currentList

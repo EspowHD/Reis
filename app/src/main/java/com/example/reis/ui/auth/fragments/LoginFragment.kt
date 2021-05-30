@@ -41,18 +41,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
         subscribeToObservers()
 
-        binding.btnLogin.setOnClickListener {
+        binding.btnLogin.setOnClickListener {//Attempt to login with input credentials
             viewModel.login(
-                    binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString()
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString()
             )
         }
 
-        binding.tvGoBack.setOnClickListener {
+        binding.tvGoBack.setOnClickListener {//Navigate back to the auth fragment
             if (findNavController().previousBackStackEntry != null) {
                 findNavController().popBackStack()
             } else findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToAuthFragment()
+                LoginFragmentDirections.actionLoginFragmentToAuthFragment()
             )
         }
     }

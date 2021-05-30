@@ -104,6 +104,7 @@ class CommentDialog : DialogFragment(R.layout.fragment_comment) {
             commentProgressBar.isVisible = false
             commentAdapter.comments = comments
         })
+
         viewModel.createCommentStatus.observe(viewLifecycleOwner, EventObserver(
                 onError = {
                     commentProgressBar.isVisible = false
@@ -119,6 +120,7 @@ class CommentDialog : DialogFragment(R.layout.fragment_comment) {
             btnComment.isEnabled = true
             commentAdapter.comments += comment
         })
+
         viewModel.deleteCommentStatus.observe(viewLifecycleOwner, EventObserver(
                 onError = {
                     commentProgressBar.isVisible = false

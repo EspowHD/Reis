@@ -44,11 +44,11 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             viewModel.isValidUsername(binding.etUsername.text.toString())
         }
 
-        binding.tvGoBack.setOnClickListener {
+        binding.tvGoBack.setOnClickListener {//Navigate back to the Auth fragment
             if (findNavController().previousBackStackEntry != null) {
                 findNavController().popBackStack()
             } else findNavController().navigate(
-                    SignUpFragmentDirections.actionSignUpFrgamentToAuthFragment()
+                SignUpFragmentDirections.actionSignUpFrgamentToAuthFragment()
             )
         }
     }

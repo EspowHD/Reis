@@ -51,25 +51,28 @@ class AuthViewModel @ViewModelInject constructor(
     }
 
     fun register(email: String, username: String, password: String, repeatedPassword: String) {
-        val error = if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-            applicationContext.getString(R.string.error_input_empty)
-        } else if (password != repeatedPassword) {
-            applicationContext.getString(R.string.error_incorrectly_repeated_password)
-        } else if (username.length < MIN_USERNAME_LENGTH) {
-            applicationContext.getString(R.string.error_username_too_short, MIN_USERNAME_LENGTH)
-        } else if (username.length > MAX_USERNAME_LENGTH) {
-            applicationContext.getString(R.string.error_username_too_long, MAX_USERNAME_LENGTH)
-        } else if (password.length < MIN_PASSWORD_LENGTH) {
-            applicationContext.getString(R.string.error_password_too_short, MIN_PASSWORD_LENGTH)
-        } else if (!password.contains(LOWER_CASE_LETTER_REGEX)) {
+        val error =
+            if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {//Check that the fields are valid
+                applicationContext.getString(R.string.error_input_empty)
+            } else if (password != repeatedPassword) {
+                applicationContext.getString(R.string.error_incorrectly_repeated_password)
+            } else if (username.length < MIN_USERNAME_LENGTH) {
+                applicationContext.getString(R.string.error_username_too_short, MIN_USERNAME_LENGTH)
+            } else if (username.length > MAX_USERNAME_LENGTH) {
+                applicationContext.getString(R.string.error_username_too_long, MAX_USERNAME_LENGTH)
+            } else if (password.length < MIN_PASSWORD_LENGTH) {
+                applicationContext.getString(R.string.error_password_too_short, MIN_PASSWORD_LENGTH)
+            } else if (!password.contains(LOWER_CASE_LETTER_REGEX)) {
             applicationContext.getString(R.string.error_password_no_lower_case)
         } else if (!password.contains(UPPER_CASE_LETTER_REGEX)) {
             applicationContext.getString(R.string.error_password_no_upper_case)
         } else if (!password.contains(SPECIAL_CHARACTERS_REGEX)) {
-            applicationContext.getString(R.string.error_password_no_special_characters)
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            applicationContext.getString(R.string.error_not_a_valid_email)
-        } else null
+                applicationContext.getString(R.string.error_password_no_special_characters)
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email)
+                    .matches()
+            ) {//Checks the email against a REGEX
+                applicationContext.getString(R.string.error_not_a_valid_email)
+            } else null
 
         error?.let {
             _registerStatus.postValue(Event(Resource.Error(it)))

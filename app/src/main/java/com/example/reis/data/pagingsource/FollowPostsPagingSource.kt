@@ -31,6 +31,7 @@ class FollowPostsPagingSource(
             val chunks = follows.chunked(10)
             val resultList = mutableListOf<Post>()
             var curPage = params.key
+            //After splitting the list of followed users into chunks of ten returns all posts for each followed user/chunk
             chunks.forEach { chunk ->
                 curPage = params.key ?: db.collection("posts")
                     .whereIn("authorUid", chunk)
@@ -49,9 +50,10 @@ class FollowPostsPagingSource(
             }
 
 
-            val lastDocumentSnapshot = curPage!!.documents[curPage!!.size() - 1]
+            val lastDocumentSnapshot =
+                curPage!!.documents[curPage!!.size() - 1]//The last document in the list of posts
 
-            val nextPage = db.collection("posts")
+            val nextPage = db.collection("posts")//Next query
                 .whereIn("authorUid", if (chunks.isNotEmpty()) chunks[0] else listOf())
                 .orderBy("date", Query.Direction.DESCENDING)
                 .startAfter(lastDocumentSnapshot)

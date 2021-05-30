@@ -9,5 +9,5 @@ interface AuthRepository {
 
     suspend fun login(email: String, password: String): Resource<AuthResult>
 
-    suspend fun checkValidUsername(username: String): Resource<Boolean>
+    suspend fun checkValidUsername(username: String): Resource<Boolean>//Used to make sure that the username is unique and not currently in use
 }

@@ -30,19 +30,19 @@ class AuthFragment : Fragment(R.layout.activity_auth) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvLogin.setOnClickListener {
+        binding.tvLogin.setOnClickListener {//Navigate to the Login Fragment
             if (findNavController().previousBackStackEntry != null) {
                 findNavController().popBackStack()
             } else findNavController().navigate(
-                    AuthFragmentDirections.actionAuthFragmentToLoginFragment()
+                AuthFragmentDirections.actionAuthFragmentToLoginFragment()
             )
         }
 
-        binding.tvSignUp.setOnClickListener {
+        binding.tvSignUp.setOnClickListener {//Navigate to the Sign up Fragment
             if (findNavController().previousBackStackEntry != null) {
                 findNavController().popBackStack()
             } else findNavController().navigate(
-                    AuthFragmentDirections.actionAuthFragmentToSignUpFrgament()
+                AuthFragmentDirections.actionAuthFragmentToSignUpFrgament()
             )
         }
     }
